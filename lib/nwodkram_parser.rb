@@ -3,9 +3,9 @@ class NwodkramParser < Nokogiri::XML::SAX::Document
   attr_accessor :attr, :name
 
   MARKDOWN = { 'p'          => [""                                                               , "\n"],
-               'a'          => ["["                                                              , lambda { "](#{@attr['href']})" }],
-               'img'        => [ lambda {"![#{@attr['title'] || @attr['alt']}](#{@attr['src']})"}, ""],
-               'li'         => [ lambda { @parent == "ul" ? "* " : "1. " }                       , "\n"],
+               'a'          => ["["                                                              , lambda { |s| "](#{@attr['href']})" }],
+               'img'        => [ lambda { |s| "![#{@attr['title'] || @attr['alt']}](#{@attr['src']})"}, ""],
+               'li'         => [ lambda { |s| @parent == "ul" ? "* " : "1. " }                       , "\n"],
                'code'       => [""                                                               , ""],
                'h1'         => ["# "                                                             , " #\n" ],
                'h2'         => ["## "                                                            , " ##\n" ],
